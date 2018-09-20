@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="Styles/Pedido.css">
+    <script type="text/javascript" src="jquery/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="Script/Pedido.js"></script>
+
+
+
+</head>
+<body>
+
+    <div class="contenedorPrincipal">
+
+
+        <!-- Titulo empresa -->
+        <div class="titulo">Deliver Eat</div>
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <!-- Nombre y logo de comercio adherido -->
+                <div class="contenedorEmpresa">
+                    <div class="imagen"></div>
+                    <label class="nombre textoSubtitulo">McDonalds</label>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <!-- Tabla con productos contenidos en el carrito -->
+                <div class="contenedorProductos">
+                    <table class="table">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>McCombo Triple Mac</td>
+                                <td>1</td>
+                                <td>$210,00</td>
+                            </tr>
+                            <tr>
+                                <td>McCombo Signature Blue Cheese Carne</td>
+                                <td>1</td>
+                                <td>$245,00</td>
+                            </tr>
+
+                            <tr>
+                                <td>Doble Cuarto de Libra</td>
+                                <td>2</td>
+                                <td>$160,00</td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <th class="text-right">Total:</th>
+                                <td>$615,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Datos del pedido-->
+
+        <div id="datosPedido">
+
+            <!-- Lugar de recepcion -->
+            <div class="separador"></div>
+            <label class="textoSubtitulo">¿Dónde quieres recibirlos?</label>
+            <div class="row">
+                <div class="form-group col-md-3 col-md-offset-4">
+                    <label for="ex2">Calle</label>
+                    <input class="form-control" id="txtCalle" type="text">
+                </div>
+                <div class="form-group col-md-3 col-md-offset-4">
+                    <label for="ex3">Número</label>
+                    <input class="form-control" id="txtNumero" type="text">
+                </div>
+
+                <div class="form-group col-md-3 col-md-offset-4">
+                    <label for="ex1">Barrio</label>
+                    <input class="form-control" id="txtBarrio" type="text">
+                </div>
+                <div class="form-group col-md-3 col-md-offset-4">
+                    <label>Código postal</label>
+                    <input class="form-control" id="txtCodigoPostal" type="text">
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-3 col-md-offset-4">
+                    <label for="ex1">Piso (opcional)</label>
+                    <input class="form-control" id="txtPiso" type="text">
+                </div>
+                <div class="form-group col-md-3 col-md-offset-4">
+                    <label for="ex2">Departamento (opcional)</label>
+                    <input class="form-control" id="txtDepartamento" type="text">
+                </div>
+            </div>
+
+
+            <!-- Formas de pago -->
+            <div class="separador"></div>
+            <label class="textoSubtitulo">¿Cómo desea pagar?</label>
+
+            <div class="row" id="contenedorFormaDePagoSeleccionada" style="display:none">
+                <div class="col-sm-12">
+                    <label id="textoFormaDePagoSeleccionada"></label>
+                </div>
+            </div>
+
+            <div class="contenedorBotones">
+                <button type="button" class="btn btn-info botonEfectivo">
+                    Pagar en efectivo
+                </button>
+                <button type="button" class="btn btn-info botonTarjeta">
+                    Cargar Tarjeta
+                </button>
+
+            </div>
+
+
+            <!-- Fecha de recepcion -->
+            <div class="separador"></div>
+            <label class="textoSubtitulo">¿Cuando deseas recibirlos?</label>
+
+            <div class="row" id="contenedorFechaDeEnvio" style="display:none">
+                <div class="col-sm-12">
+                    <label id="textoFechaDeEnvio"></label>
+                </div>
+            </div>
+
+            <div class="contenedorBotones">
+                <button type="button" class="btn btn-info botonLoAntesPosible">
+                    Lo antes posible
+                </button>
+                <button type="button" class="btn btn-info botonDefinirFechaYHora">
+                    Definir fecha y hora
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boton confirmar pedido -->
+    <div id="confirmarPedido">
+        <button type="button" class="btn btn-primary btn-lg botonConfirmarPedido">
+            Confirmar pedido
+        </button>
+    </div>
+
+
+    <!-- Popup para definir fecha -->
+    <div class="popupDefinirFechaYHora popup">
+        <div class="fondo"></div>
+        <div class="contenido">
+
+            <label class="textoSubtitulo">Fecha y hora de entrega</label>
+
+            <div class="form-group">
+                <label>Fecha</label>
+                <input class="form-control" id="txtFechaEntrega" type="date">
+                <label class="error"></label>
+            </div>
+
+            <div class="form-group">
+                <label>Hora</label>
+                <input class="form-control" id="txtHoraEntrega" type="time">
+                <label class="error"></label>
+            </div>
+
+            <div class="botonesPopup">
+                <button type="button" class="btn btn-outline-secondary botonVolver">Volver</button>
+                <button type="button" class="btn btn-outline-success botonConfirmarFechaYHora">Confirmar fecha y hora</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Popup para pago con efectivo -->
+    <div class="popupPagoEfectivo popup">
+        <div class="fondo"></div>
+        <div class="contenido">
+            <label for="ex1" class="textoSubtitulo">Pago con efectivo</label>
+
+            <div class="form-group">
+                <label for="txtMontoAbonar">Monto con el que abonará</label>
+                <input class="form-control" id="txtMontoAbonar" type="text" />
+                <label class="error"></label>
+            </div>
+
+            <div class="botonesPopup">
+                <button type="button" class="btn btn-outline-secondary botonVolver">Volver</button>
+                <button type="button" class="btn btn-outline-success botonCargarMonto">Cargar Monto</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup informar error -->
+    <div class="popupError popup">
+        <div class="fondo"></div>
+        <div class="contenido">
+            <label class="texto"></label>
+
+            <div class="botonesPopup">
+                <button type="button" class="btn btn-outline-secondary botonVolver">Volver</button>
+                <button type="button" class="btn btn-outline-success botonAceptar">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Popup para pago con tarjetas -->
+    <div class="popupPagoTarjeta popup">
+        <div class="fondo"></div>
+        <div class="contenido">
+
+            <div class="content">
+
+                <label class="textoSubtitulo">Pago con tarjeta</label>
+
+                <div class="form-group">
+                    <label for="txtNombreYApellido">Nombre y Apellido del titular</label>
+                    <input class="form-control" id="txtNombreYApellido" type="text">
+                    <label class="error"></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="txtDNI">DNI del titular</label>
+                    <input class="form-control" id="txtDNI" type="text">
+                    <label class="error"></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="txtNumeroTarjeta">Número de la tarjeta</label>
+                    <input class="form-control" id="txtNumeroTarjeta" type="text">
+                    <label class="error"></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="txtCodigoSeguridad">Código de seguridad</label>
+                    <input class="form-control" id="txtCodigoSeguridad" type="text">
+                    <label class="error"></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaVencimiento">Fecha de vencimiento</label>
+                    <input class="form-control" id="fechaVencimiento" type="text" placeholder="MM/YYYY">
+                    <label class="error"></label>
+                </div>
+
+                <div class="botonesPopup textoInput">
+                    <button type="button" class="btn btn-outline-secondary botonVolver">Volver</button>
+                    <button type="button" class="btn btn-outline-success botonCargarTarjeta">Cargar Tarjeta</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="contenedorCargando">
+        <label>Registrando...</label>
+    </div>
+</body>
+</html>

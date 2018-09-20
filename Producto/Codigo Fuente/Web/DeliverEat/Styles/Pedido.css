@@ -1,0 +1,199 @@
+﻿@font-face {
+    font-family: "FuenteDE";
+    src: url(../Fuente/coolvetica_rg.ttf);
+}
+
+body {
+    background-color: #ffc244;
+    overflow-x: hidden;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.titulo {
+    font-family: FuenteDE;
+    font-size: 8rem;
+    color: white;
+}
+
+
+.contenedorEmpresa {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+    .contenedorEmpresa .imagen {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 3rem;
+        background-size: cover;
+        background-position: center;
+        background-image: url('../Recursos/Imagenes/logo_mc.png');
+    }
+
+    .contenedorEmpresa .nombre {
+        margin-left: 0.5rem;
+    }
+
+.separador {
+    margin-top: 2rem;
+}
+
+
+.textoInput {
+    font-family: FuenteDE;
+    font-size: 8sp;
+}
+
+.textoSubtitulo {
+    font-family: FuenteDE;
+    font-size: 2em;
+}
+
+.botonTarjeta, .botonEfectivo, .botonLoAntesPosible, .botonDefinirFechaYHora, .botonConfirmarPedido {
+    background-color: #00a082;
+}
+
+.popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+    .popup .fondo {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: black;
+        bottom: 0;
+        right: 0;
+        opacity: 0;
+        transition: all 0.3s;
+    }
+
+    .popup.visible {
+        pointer-events: all;
+    }
+
+        .popup.visible .fondo {
+            opacity: 0.7;
+        }
+
+    .popup .contenido {
+        box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
+        background-color: white;
+        z-index: 1;
+        border-radius: 1rem;
+        padding: 1rem;
+        z-index: 10;
+        position: absolute;
+        width: 500px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        top: 3rem;
+        opacity: 0;
+        transform: translateY(100px);
+        transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .popup.visible .contenido {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+
+.botonesPopup {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1em;
+    justify-content: space-between;
+}
+
+input.error {
+    border-color: red;
+    border-bottom-width: 3px;
+}
+
+.contenedorProductos {
+    background-color: white;
+    border: 8px solid #00a082;
+    border-radius: 1em;
+}
+
+#confirmarPedido {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-top: 4px solid white;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+.form-group {
+    position: relative;
+    transition: all 0.3s;
+}
+
+    .form-group > .error {
+        max-height: 0rem;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.3s;
+        color: red;
+        font-size:0.8rem;
+        position: absolute;
+    }
+
+    .form-group.error {
+        padding-bottom: 0.8rem;
+    }
+
+        .form-group.error > .error {
+            opacity: 1;
+            max-height: 1rem;
+        }
+
+.popupPagoTarjeta .contenido {
+    padding: 0;
+    overflow: hidden;
+}
+
+.popupPagoTarjeta .content {
+    max-height: 85vh;
+    overflow: auto;
+    padding: 1rem;
+}
+
+
+#contenedorCargando{
+    position:fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background-color:rgba(255,255,255,0.9);
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    align-items:center;
+    transition: all 0.3s;
+    opacity:0;
+    pointer-events:none;
+}
+
+#contenedorCargando.visible{
+    opacity:1;
+    pointer-events:all;
+}
+
+#contenedorCargando label{
+    font-size:2rem;
+}
