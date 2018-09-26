@@ -7,10 +7,17 @@ var patron_dni = "^[0-9]{7,8}$";
 var patron_numeroTarjeta = "^[0-9]{16}$";
 var patron_codigoSeguridad = "^[0-9]{3}$";
 
+
+var conTarjetaDeCredito = undefined;
+var montoEfectivo = 0;
+var vueltoEfectivo = 0;
+var fecha = undefined;
+
 $(function () {
     initFormasDePago();
     initFecha();
     inicializarPopups();
+
 
     $('.botonConfirmarPedido').click(function () {
 
@@ -30,14 +37,47 @@ $(function () {
 
         //Pantalla de carga al registrar el pedido, se deben borrar los inputs
         $('#contenedorCargando').addClass('visible');
-        setTimeout(function () {
-            $('#contenedorCargando').removeClass('visible');
-            $('.popupError .texto').text('Su pedido ha sido registrado correctamente');
-            $('.popupError').addClass('visible');
-        }, 2000);
+        let data = JSON.stringify({
+            pedido: JSON.stringify({
+                ComercioNombre: 'McDonalds',
+                Total: montoTotal,
+                PagaConTarjeta: conTarjetaDeCredito,
+                MontoEfectivo: conTarjetaDeCredito ? 0 : montoEfectivo,
+                VueltoEfectivo: conTarjetaDeCredito ? 0 : vueltoEfectivo,
+                Fecha: fecha == undefined ? 'Lo antes posible' : fecha,
+                Domicilio: {
+                    barrio: barrio,
+                    calle: calle,
+                    numero: numero,
+                    codigoPostal: codigoPostal,
+                    depto: $('#txtDepartamento').val(),
+                    piso: $('#txtPiso').val(),
+                }
+            })
+        });
+
+        console.log(data);
+
+
+        $.ajax({
+            type: "POST",
+            url: '../Servidor.aspx/AgregarPedido',
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                //$('#contenedorCargando').removeClass('visible');
+                //$('.popupError .texto').text('Su pedido ha sido registrado correctamente');
+                //$('.popupError').addClass('visible');
+
+                location.href = "/ConsultaPedidos.html";
+            },
+            failure: function (response) {
+                $('#contenedorCargando').removeClass('visible');
+                $('.popupError .texto').text('Error registrando el pedido');
+                $('.popupError').addClass('visible');
+            }
+        });
     });
-
-
 
     $('.popupError .botonAceptar').click(function () {
         $('.popupError').removeClass('visible');
@@ -56,6 +96,8 @@ function initFecha() {
         $('#contenedorFechaDeEnvio').slideDown(300);
         $('#textoFechaDeEnvio').text('Recibirás el pedido lo antes posible');
         conFecha = true;
+
+        fecha = undefined;
     });
 
     $(".botonDefinirFechaYHora").click(function () {
@@ -113,6 +155,7 @@ function cargarTarjeta() {
     $('#textoFormaDePagoSeleccionada').text('Seleccionaste pagar con Tarjeta de Credito N° ' + $('#txtNumeroTarjeta').val());
     $('.popupPagoTarjeta').removeClass('visible');
 
+    conTarjetaDeCredito = true;
     conPago = true;
 }
 
@@ -207,11 +250,17 @@ function validarTarjeta() {
 function cargarEfectivo() {
     if (!validarEfectivo()) return;
 
+    montoEfectivo = $('#txtMontoAbonar').val();
+    vueltoEfectivo = (parseFloat($('#txtMontoAbonar').val() - parseFloat(montoTotal)));
+
     $('#contenedorFormaDePagoSeleccionada').show();
-    $('#textoFormaDePagoSeleccionada').text('Seleccionaste pagar con efectivo. Monto: $' + $('#txtMontoAbonar').val());
+    $('#textoFormaDePagoSeleccionada').text('Seleccionaste pagar con efectivo. Monto: $' + montoEfectivo + '. Vuelto: $' + vueltoEfectivo);
     $('.popupPagoEfectivo').removeClass('visible');
 
+    conTarjetaDeCredito = false;
     conPago = true;
+
+
 }
 
 //Limpiar los campos contenidos en el popup pago en efectivo
@@ -274,6 +323,7 @@ function confirmarFechaYHora() {
     $('.popupDefinirFechaYHora').removeClass('visible');
 
     conFecha = true;
+    fecha = $('#txtFechaEntrega').val() + ' a las ' + $('#txtHoraEntrega').val();
 }
 
 
@@ -323,3 +373,4 @@ function inputConError(idInput, mensaje) {
 function checkInput(idInput, pattern) {
     return $(idInput).val().match(pattern) ? true : false;
 }
+
